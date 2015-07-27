@@ -10,6 +10,23 @@
     "build": "mkdir -p lib && coffee -c -o lib/ src/"
   },
   "dependencies": {
+    "gerber-to-svg": "^0.4.2",
     "lodash": "^3.10.0"
-  }
+  },
+  "main": "lib/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasbah/svgerber-board-builder.git"
+  },
+  "keywords": [
+    "gerber",
+    "svg",
+    "pcb",
+    "electronics"
+  ],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/kasbah/svgerber-board-builder/issues"
+  },
+  "homepage": "https://github.com/kasbah/svgerber-board-builder#readme"
 }
