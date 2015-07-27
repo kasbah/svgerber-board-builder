@@ -3,19 +3,24 @@ _           = require 'lodash'
 layerOptions = require './layer-options'
 idLayer      = require './identify-layer'
 build        = require './build-board'
+options = require './color-options'
 
-defaultStyle =
+styleToSvgObj = ({copperFinish, solderMask, silkScreen}) ->
   style:
     type: 'text/css',
     _: "
       .Board--board { color: dimgrey; }
       .Board--cu { color: lightgrey; }
-      .Board--cf { color: goldenrod; }
-      .Board--sm { color: darkgreen; opacity: 0.75; }
-      .Board--ss { color: white; }
+      .Board--cf { color: #{options.cf[copperFinish].bg}; }
+      .Board--sm { color: #{options.sm[solderMask].bg}; opacity: 0.75; }
+      .Board--ss { color: #{options.ss[silkScreen].bg}; }
       .Board--sp { color: silver; }
       .Board--out { color: black; }"
 
+defaultStyle =
+  copperFinish: 'gold'
+  solderMask: 'green'
+  silkScreen: 'white'
 
 # convert to xml object
 convertGerber = (filename, gerber) ->
@@ -61,10 +66,10 @@ convert = (gerbers, style = defaultStyle, output = 'string') ->
     layers.push { svgObj:svgObj, type: type }
   topLayers = filterBoardLayers layers, 'top'
   svgObjTop = build 'top', topLayers
-  svgObjTop.svg._.push style
+  svgObjTop.svg._.push(styleToSvgObj(style))
   bottomLayers = filterBoardLayers layers, 'bottom'
   svgObjBottom = build 'bottom', bottomLayers
-  svgObjBottom.svg._.push style
+  svgObjBottom.svg._.push(styleToSvgObj(style))
   switch output
     when 'string'
         top:gerberToSvg svgObjTop
