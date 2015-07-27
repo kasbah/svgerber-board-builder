@@ -3,4 +3,13 @@
   "version": "0.0.1",
   "description": "Gerber to SVG board view converter",
   "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "^1.9.3"
+  },
+  "scripts": {
+    "build": "mkdir -p lib && coffee -c -o lib/ src/"
+  },
+  "dependencies": {
+    "lodash": "^3.10.0"
+  }
 }
