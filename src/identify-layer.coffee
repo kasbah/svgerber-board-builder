@@ -2,6 +2,7 @@
 
 # require the layer options
 layerOpts = require './layer-options'
+lodash = require 'lodash'
 
 # some regexp constants
 reTOP = /top/i
@@ -27,8 +28,8 @@ module.exports = (name) ->
   else if reMASK.test name then type += 'sm'
   else if rePASTE.test name then type += 'sp'
   # assume it's copper if filename is 'top' or 'bottom' by itself
-  else if name.length is len then type += 'cu' 
+  else if name.length is len then type += 'cu'
   # make sure we don't return something invalid
-  unless _.find layerOpts, { val: type } then type = 'drw'
+  unless lodash.find layerOpts, { val: type } then type = 'drw'
   # return what we found
   type
