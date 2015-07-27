@@ -2,7 +2,7 @@
 # hopefully less janky than the first one
 
 # board outline processor
-boardOutline = require './build-board-outline.coffee'
+boardOutline = require './build-board-outline'
 
 # make sure we don't have overlapping ids
 unique = 0
