@@ -1,9 +1,10 @@
-fs           = require 'fs'
-path         = require 'path'
-gerberToSvg  = require 'gerber-to-svg'
+fs          = require 'fs'
+path        = require 'path'
+gerberToSvg = require 'gerber-to-svg'
+lodash      = require 'lodash'
 layerOptions = require './layer-options'
 idLayer      = require './identify-layer'
-lodash = require 'lodash'
+build        = require './build-board'
 
 # convert to xml object function
 convertGerber = (filename, gerber) ->
@@ -43,4 +44,19 @@ for p in process.argv.slice(2)
   type = idLayer(filename)
   layers.push({svgObj:svgObj, type: type})
 
+style =
+  style:
+    type: 'text/css',
+    _: "
+      .Board--board { color: dimgrey; }
+      .Board--cu { color: lightgrey; }
+      .Board--cf { color: goldenrod; }
+      .Board--sm { color: darkgreen; opacity: 0.75; }
+      .Board--ss { color: white; }
+      .Board--sp { color: silver; }
+      .Board--out { color: black; }"
+
 topLayers = filterBoardLayers(layers, 'top')
+svgObj = build('top', topLayers)
+svgObj.svg._.push(style)
+console.log(gerberToSvg(svgObj))
